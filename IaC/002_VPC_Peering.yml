@@ -1,0 +1,36 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Create a VPC peering connection between two VPCs
+
+Parameters:
+  RequesterVPCId:
+    Type: String
+    Description: The ID of the requester VPC
+    Default: 'vpc-0688efb4abc9ab0cf'
+  RequesterCIDR:
+    Type: String
+    Description: The CIDR block of the requester VPC
+    Default: '192.168.10.0/24'
+  AccepterVPCId:
+    Type: String
+    Description: The ID of the accepter VPC
+    Default: 'vpc-077379b0b2fb02ca9'
+  AccepterCIDR:
+    Type: String
+    Description: The CIDR block of the accepter VPC
+    Default: '10.16.0.0/16'
+  PeeringConnectionName:
+    Type: String
+    Description: OnPrem-AWS-Lab
+    Default: 'subnet-0e935f2eeab6dc5ab'
+
+Resources:
+  VPCPeeringConnection:
+    Type: AWS::EC2::VPCPeeringConnection
+    Properties:
+      VpcId: !Ref RequesterVPCId
+      PeerVpcId: !Ref AccepterVPCId
+      PeerRegion: !Ref AWS::Region
+      PeerOwnerId: !Ref AWS::AccountId
+      Tags:
+        - Key: Name
+          Value: !Ref PeeringConnectionName

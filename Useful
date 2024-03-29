@@ -1,0 +1,9 @@
+Delete all Docker Images
+    docker rmi $(docker images -q)
+
+Unzip
+    tar -xzvf sakila-db.tar.gz
+
+CLI MySQL
+    elwes@elwes:~/projects/AWS_Solutions_001/DB_L_000$ mysql -h 127.0.0.1 -P 3306 -u user -p
+    

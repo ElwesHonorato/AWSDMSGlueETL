@@ -1,0 +1,14 @@
+Created DB_L_000
+Installed MySQL WorkBench
+
+Additional note
+Beware that by default, the mysql client tries to connect using a unix socket when you tell it to connect to localhost. 
+So do use 127.0.0.1 and not localhost:
+elwes@elwes:~/projects/AWS_Solutions_001/DB_L_000$ mysql -h 127.0.0.1 -P 3306 -u root -p
+Enter password: 
+
+mysql> SOURCE /home/elwes/projects/AWS_Solutions_001/DB_L_000/sakila-db/sakila-schema.sql
+mysql> SOURCE /home/elwes/projects/AWS_Solutions_001/DB_L_000/sakila-db/sakila-data.sql.sql
+
+
+
