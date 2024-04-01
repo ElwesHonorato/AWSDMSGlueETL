@@ -1,0 +1,104 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template for creating RDS instance
+
+Parameters:
+  AmazonDMSCloudWatchLogsRole:
+    Type: String
+    Default: arn:aws:iam::aws:policy/service-role/AmazonDMSCloudWatchLogsRole
+  
+Resources:
+  DMSCloudWatchRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: dms-cloudwatch-logs-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: dms.amazonaws.com
+            Action: sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+        - !Ref AmazonDMSCloudWatchLogsRole
+#   DMSS3GlueAthenaPolicy:
+#     Type: AWS::S3::BucketPolicy
+#     Properties:
+#       Bucket: !Ref RawBucket
+#       PolicyName: "MyCustomPolicy"
+#       PolicyDocument:
+#         Version: "2012-10-17"
+#         Statement:
+#           - Effect: "Allow"
+#             Action:
+#               - "s3:GetBucketLocation"
+#               - "s3:GetObject"
+#               - "s3:ListBucket"
+#               - "s3:ListBucketMultipartUploads"
+#               - "s3:ListMultipartUploadParts"
+#               - "s3:AbortMultipartUpload"
+#               - "s3:DeleteObject"
+#               - "s3:DeleteObjectVersion"
+#               - "s3:PutObject"
+#               - "s3:PutObjectTagging"
+#               - "s3:DeleteObjectTagging"
+#               - "s3:DeleteObjectVersionTagging"
+#             Resource:
+#               - !Sub "arn:aws:s3:::${RawBucket}"
+#               - !Sub "arn:aws:s3:::${RawBucket}/*"
+#           - Effect: "Allow"
+#             Action:
+#               - "glue:CreateDatabase"
+#               - "glue:GetDatabase"
+#               - "glue:CreateTable"
+#               - "glue:DeleteTable"
+#               - "glue:UpdateTable"
+#               - "glue:GetTable"
+#               - "glue:BatchCreatePartition"
+#               - "glue:CreatePartition"
+#               - "glue:UpdatePartition"
+#               - "glue:GetPartition"
+#               - "glue:GetPartitions"
+#               - "glue:BatchGetPartition"
+#             Resource:
+#               - !Sub "arn:aws:glue:*:${AWS::AccountId}:catalog"
+#               - !Sub "arn:aws:glue:*:${AWS::AccountId}:database/*"
+#               - !Sub "arn:aws:glue:*:${AWS::AccountId}:table/*"
+#           - Effect: "Allow"
+#             Action:
+#               - "athena:StartQueryExecution"
+#               - "athena:GetQueryExecution"
+#               - "athena:CreateWorkGroup"
+#             Resource: !Sub "arn:aws:athena:*:${AWS::AccountId}:workgroup/glue_catalog_generation_for_task_*"
+
+
+
+
+
+
+
+
+
+
+
+
+  # DMSReplicationPolicy:
+  #   Type: "AWS::IAM::ManagedPolicy"
+  #   Properties:
+  #     ManagedPolicyName: "AmazonDMSVPCManagementPolicy"
+  #     Description: "allows dms vpc management"
+  #     PolicyDocument:
+  #       Version: "2012-10-17"
+  #       Statement:
+  #         - Effect: "Allow"
+  #           Resource: "*"
+  #           Action:
+  #             - ec2:CreateNetworkInterface
+  #             - ec2:DescribeAvailabilityZones
+  #             - ec2:DescribeInternetGateways
+  #             - ec2:DescribeSecurityGroups
+  #             - ec2:DescribeSubnets
+  #             - ec2:DescribeVpcs
+  #             - ec2:DeleteNetworkInterface
+  #             - ec2:ModifyNetworkInterfaceAttribute
+

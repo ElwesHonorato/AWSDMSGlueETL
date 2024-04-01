@@ -1,0 +1,140 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template for creating RDS instance
+
+Parameters:
+# Source
+  SourceVPCId:
+    Type: String
+    Description: The ID of the Source
+    Default: 'vpc-0deae1745596a1de6'
+  SourceDBUser:
+    Type: String
+    NoEcho: true
+    Description: 'Enter the User for the RDS instance'
+    Default: 'a4lwordpress'
+  DSourceBPassword:
+    Type: String
+    NoEcho: true
+    Description: Enter the password for the RDS instance
+    Default: 'cats-dogs-rabbits-chickens'
+  SourceSubnetPrivA:
+    Description: onprem-private
+    Type: String
+    Default: 'subnet-05636d17b5e89c1cc'
+  SourceSubnetPrivb:
+    Description: onprem-private	
+    Type: String
+    Default: 'subnet-052b84cec137891cd'
+  SourceawsSecurityGroupDB:
+    Description: onpremSecurityGroupDB
+    Type: String
+    Default: 'sg-0248beb4988c30b5a'
+
+# Target
+  VPCId:
+    Type: String
+    Description: The ID of the accepter VPC
+    Default: 'vpc-04fa976807cd22c3e'
+  DBUser:
+    Type: String
+    NoEcho: true
+    Description: Enter the User for the RDS instance
+    Default: 'a4lwordpress'
+  DBPassword:
+    Type: String
+    NoEcho: true
+    Description: Enter the password for the RDS instance
+    Default: 'cats-dogs-rabbits-chickens'
+  SubnetPrivA:
+    Description: awsPrivateSubnetA	
+    Type: String
+    Default: 'subnet-0ce84d39fcfd1c802'
+  SubnetPrivB:
+    Description: awsPrivateSubnetB	
+    Type: String
+    Default: 'subnet-0ed27759aa0abac5a'
+  awsSecurityGroupDB:
+    Description: awsSecurityGroupDB
+    Type: String
+    Default: 'sg-0959488e4fe2c6df4'
+
+  # RawBucket:
+  #   Type: String
+  #   Description: Name of the S3 bucket
+  #   Default: 'rawbucket-rdsreplication'
+
+
+Resources:
+
+# A4L-MYSQL-TARGET
+  DBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupName: A4LDBSNGROUP
+      DBSubnetGroupDescription: Subnet A4LDBSNGROUP
+      SubnetIds:
+        - !Ref SubnetPrivA
+        - !Ref SubnetPrivB
+  DBInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceIdentifier: a4lwordpress
+      DBName: a4lwordpress
+      DBInstanceClass: db.t3.micro
+      Engine: MYSQL
+      EngineVersion: '8.0.35'
+      MasterUsername: !Ref DBUser
+      MasterUserPassword: !Ref DBPassword
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      VPCSecurityGroups:
+        - !Ref awsSecurityGroupDB 
+      PubliclyAccessible: false
+      MultiAZ: false
+      StorageType: gp2
+      AllocatedStorage: 20
+      Tags:
+        - Key: ENV
+          Value: DEV
+
+
+# REPLICATION INSTANCE
+  RDSReplicationSubnetGroup:
+      Type: AWS::DMS::ReplicationSubnetGroup
+      Properties:
+        ReplicationSubnetGroupDescription: A4LDMSSNGROUP 
+        ReplicationSubnetGroupIdentifier: A4LDMSSNGROUP
+        SubnetIds: 
+          - !Ref SubnetPrivA
+          - !Ref SubnetPrivB
+
+  # [The IAM Role arn:aws:iam::815363371634:role/dms-vpc-role is not configured properly.]
+  # Run a Replication Instance Throught the Console than delete
+  # With this process the dms-vpc-role will be created.
+  DMSReplicationInstance:
+    Type: AWS::DMS::ReplicationInstance
+    Properties:
+      ReplicationInstanceIdentifier: A4LONPREMTOAWS
+      ReplicationInstanceClass: dms.t3.micro
+      AllocatedStorage: 10    # Update requires: No interruption
+      EngineVersion: '3.5.1'  # Update requires: No interruption
+      MultiAZ: false          # Update requires: No interruption
+      ReplicationSubnetGroupIdentifier: !Ref RDSReplicationSubnetGroup
+      VpcSecurityGroupIds:
+        - !Ref awsSecurityGroupDB
+      PubliclyAccessible: false
+      Tags:
+        - Key: Name
+          Value: MyReplicationInstance
+
+
+# S3 BUCKET
+  # RawBucketRDSReplication:
+  #   Type: AWS::S3::Bucket
+  #   Properties:
+  #     BucketName: !Ref RawBucket
+
+Outputs:
+  RDSEndpoint:
+    Description: Endpoint of the newly created RDS instance
+    Value: !GetAtt DBInstance.Endpoint.Address
+

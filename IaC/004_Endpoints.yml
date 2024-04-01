@@ -1,0 +1,71 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  SourceEndpointIdentifier:
+    Type: String
+    Default: 'SourceMySQL'
+  SourceEngineName:
+    Type: String
+    Default: 'mysql'
+  SourceUsername:
+    Type: String
+    Default: 'a4lwordpress'
+  SourcePassword:
+    Type: String
+    Default: 'cats-dogs-rabbits-chickens'
+  SourceServerName:
+    Type: String
+    Default: 'sourcepostgresql.cdhvwedmmsgz.us-east-1.rds.amazonaws.com'
+  SourcePort:
+    Type: String
+    Default: '3306'
+
+  TargetEndpointIdentifier:
+    Type: String
+    Default: 'TargetMySQL'
+  TargetEngineName:
+    Type: String
+    Default: 'mysql'
+  TargetUsername:
+    Type: String
+    Default: 'a4lwordpress'
+  TargetPassword:
+    Type: String
+    Default: 'cats-dogs-rabbits-chickens'
+  TargetServerName:
+    Type: String
+    Default: 'a4lwordpress.cdhvwedmmsgz.us-east-1.rds.amazonaws.com'
+  TargetPort:
+    Type: String
+    Default: '3306'
+
+Resources:
+  SourceDatabaseEndpoint:
+    Type: "AWS::DMS::Endpoint"
+    Properties:
+      EndpointType: "source"
+      EndpointIdentifier: !Ref SourceEndpointIdentifier
+      DatabaseName: a4lwordpress
+      EngineName: !Ref SourceEngineName
+      Username: !Ref SourceUsername
+      Password: !Ref SourcePassword
+      ServerName: !Ref SourceServerName
+      Port: !Ref SourcePort
+      SslMode: "none"
+      Tags:
+        - Key: "Name"
+          Value: "SourceDatabaseEndpoint"
+
+  TargetDatabaseEndpoint:
+    Type: "AWS::DMS::Endpoint"
+    Properties:
+      EndpointType: "target"
+      EndpointIdentifier: !Ref TargetEndpointIdentifier
+      EngineName: !Ref TargetEngineName
+      ServerName: !Ref TargetServerName
+      Port: !Ref TargetPort
+      Username: !Ref TargetUsername
+      Password: !Ref TargetPassword
+      SslMode: "none"
+      Tags:
+        - Key: "Name"
+          Value: "TargetDatabaseEndpoint"

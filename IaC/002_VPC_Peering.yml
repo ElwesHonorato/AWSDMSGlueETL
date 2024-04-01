@@ -4,24 +4,60 @@ Description: Create a VPC peering connection between two VPCs
 Parameters:
   RequesterVPCId:
     Type: String
-    Description: The ID of the requester VPC
-    Default: 'vpc-0688efb4abc9ab0cf'
+    Description: The ID of the requester VPC - OnPrem
+    Default: 'vpc-074bbd2273c1a7940'
   RequesterCIDR:
     Type: String
     Description: The CIDR block of the requester VPC
-    Default: '192.168.10.0/24'
+    Default: '172.16.0.0/22'
+
   AccepterVPCId:
     Type: String
-    Description: The ID of the accepter VPC
-    Default: 'vpc-077379b0b2fb02ca9'
+    Description: The ID of the accepter VPC - AWS
+    Default: 'vpc-04fa976807cd22c3e'
   AccepterCIDR:
     Type: String
     Description: The CIDR block of the accepter VPC
     Default: '10.16.0.0/16'
-  PeeringConnectionName:
+
+  # # Subnets
+  # SubnetPubA:
+  #   Description: ID of the existing Public Subnet A
+  #   Type: String
+  #   Default: 'subnet-05928216af587a7a6'
+  # SubnetPubB:
+  #   Description: ID of the existing Public Subnet A
+  #   Type: String
+  #   Default: 'subnet-075ac50140654a0a9'
+
+  # SubnetPrivA:
+  #   Description: ID of the existing Private Subnet A
+  #   Type: String
+  #   Default: 'subnet-026998c17d4a1d0f8'
+  # SubnetPrivB:
+  #   Description: ID of the existing Private Subnet B
+  #   Type: String
+  #   Default: 'subnet-08e7f6a58facfd8ec'
+
+
+  SourceAwsPrivateRT:
+    Description: awsPrivateRouteTable
     Type: String
-    Description: OnPrem-AWS-Lab
-    Default: 'subnet-0e935f2eeab6dc5ab'
+    Default: 'rtb-0489e85dc4d7bfc1a'  
+  SourceAwsPublicRT:
+    Description: awsPublicRouteTable
+    Type: String
+    Default: 'rtb-05fe61a8647e30cd8'
+
+  TargetawsPrivateRT:
+    Description: awsPrivateRouteTable
+    Type: String
+    Default: 'rtb-0d54d2657dab9ccfb'  
+  TargetawsPublicRT:
+    Description: awsPublicRouteTable
+    Type: String
+    Default: 'rtb-0c33a3470bea3af49'
+
 
 Resources:
   VPCPeeringConnection:
@@ -32,5 +68,122 @@ Resources:
       PeerRegion: !Ref AWS::Region
       PeerOwnerId: !Ref AWS::AccountId
       Tags:
+        - Key: ENV
+          Value: DEV
         - Key: Name
-          Value: !Ref PeeringConnectionName
+          Value: 'A4L-ON-PREMISES-TO-AWS'
+
+  # /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+  
+  AWSDBPublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref AccepterVPCId # Replace YourVpcIdHere with the logical ID or ARN of your VPC
+      Tags:
+        - Key: Name
+          Value: 'A4L-ON-PREMISES-TO-AWS'
+
+  SourcePrivateRTToTarget:
+      Type: "AWS::EC2::Route"
+      Properties:
+        RouteTableId: !Ref SourceAwsPrivateRT
+        DestinationCidrBlock: '10.16.0.0/16'
+        VpcPeeringConnectionId: !Ref VPCPeeringConnection
+
+  SourcePublicRTToTarget:
+      Type: "AWS::EC2::Route"
+      Properties:
+        RouteTableId: !Ref SourceAwsPublicRT
+        DestinationCidrBlock: '10.16.0.0/16'
+        VpcPeeringConnectionId: !Ref VPCPeeringConnection
+
+# 
+
+  TargetPrivateRTToTarget:
+      Type: "AWS::EC2::Route"
+      Properties:
+        RouteTableId: !Ref TargetawsPrivateRT
+        DestinationCidrBlock: '172.16.0.0/22'
+        VpcPeeringConnectionId: !Ref VPCPeeringConnection
+
+  TargetPublicRTToTarget:
+      Type: "AWS::EC2::Route"
+      Properties:
+        RouteTableId: !Ref TargetawsPublicRT
+        DestinationCidrBlock: '172.16.0.0/22'
+        VpcPeeringConnectionId: !Ref VPCPeeringConnection
+
+
+
+
+
+
+
+
+
+  # AWSRouteTablePubAssociationA:
+  #   Type: "AWS::EC2::SubnetRouteTableAssociation"
+  #   Properties:
+  #     RouteTableId: !Ref AWSDBPublicRouteTable  # Replace with the logical ID or ARN of the awsPublicRT route table
+  #     SubnetId: !Ref SubnetPubA                 # Replace with the logical ID or ARN of the aws-publicA subnet
+
+  # AWSRouteTablePubAssociationA:
+  #   Type: "AWS::EC2::SubnetRouteTableAssociation"
+  #   Properties:
+  #     RouteTableId: !Ref AWSDBPublicRouteTable  # Replace with the logical ID or ARN of the awsPublicRT route table
+  #     SubnetId: !Ref SubnetPubB                 # Replace with the logical ID or ARN of the aws-publicB subnet
+
+  # # /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
+  # AWSDBPrivateRouteTable:
+  #   Type: AWS::EC2::RouteTable
+  #   Properties:
+  #     VpcId: !Ref AccepterVPCId # Replace YourVpcIdHere with the logical ID or ARN of your VPC
+
+  # AWSPrivRoute:
+  #   Type: "AWS::EC2::Route"
+  #   Properties:
+  #     RouteTableId: !Ref AWSDBPrivateRouteTable  # Replace with the logical ID or ARN of the awsPrivateRT route table
+  #     DestinationCidrBlock: "192.168.10.0/24"
+  #     VpcPeeringConnectionId: !Ref VPCPeeringConnection
+
+  # AWSRouteTablePrivAssociationA:
+  #   Type: "AWS::EC2::SubnetRouteTableAssociation"
+  #   Properties:
+  #     RouteTableId: !Ref AWSDBPrivateRouteTable  # Replace with the logical ID or ARN of the awsPrivateRT route table
+  #     SubnetId: !Ref SubnetPubA                 # Replace with the logical ID or ARN of the aws-privateA subnet
+
+  # AWSRouteTablePrivAssociationb:
+  #   Type: "AWS::EC2::SubnetRouteTableAssociation"
+  #   Properties:
+  #     RouteTableId: !Ref AWSDBPrivateRouteTable  # Replace with the logical ID or ARN of the awsPrivateRT route table
+  #     SubnetId: !Ref SubnetPubB                 # Replace with the logical ID or ARN of the aws-privateB subnet
+
+
+  # onpremPublicRTToAWS:
+  #   Type: "AWS::EC2::Route"
+  #   Properties:
+  #     RouteTableId: !Ref onpremPublicRT
+  #     DestinationCidrBlock: "10.16.0.0/16"
+  #     VpcPeeringConnectionId: !Ref VPCPeeringConnection
+
+  # SourcePostGrePublicRTToAWS:
+  #   Type: "AWS::EC2::Route"
+  #   Properties:
+  #     RouteTableId: !Ref onpremPublicRT
+  #     DestinationCidrBlock: "10.16.0.0/16"
+  #     VpcPeeringConnectionId: !Ref VPCPeeringConnection
+
+  # onpremPrivateRTToOnPrem:
+  #     Type: "AWS::EC2::Route"
+  #     Properties:
+  #       RouteTableId: !Ref awsPrivateRT
+  #       DestinationCidrBlock: '192.168.10.0/24'
+  #       VpcPeeringConnectionId: !Ref VPCPeeringConnection
+
+  # awsPublicRTToOnPrem:
+  #   Type: "AWS::EC2::Route"
+  #   Properties:
+  #     RouteTableId: !Ref awsPublicRT
+  #     DestinationCidrBlock: '192.168.10.0/24'
+  #     VpcPeeringConnectionId: !Ref VPCPeeringConnection

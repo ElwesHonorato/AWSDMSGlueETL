@@ -6,4 +6,35 @@ Unzip
 
 CLI MySQL
     elwes@elwes:~/projects/AWS_Solutions_001/DB_L_000$ mysql -h 127.0.0.1 -P 3306 -u user -p
-    
+
+
+Create an AWS Glue Data Catalog with AWS DMS
+https://aws.amazon.com/blogs/database/create-an-aws-glue-data-catalog-with-aws-dms/#:~:text=However%2C%20the%20need%20to%20run%20a%20crawler,your%20databases%20and%20analytics%20workloads%20to%20AWS
+
+
+https://www.youtube.com/watch?v=bLu1dblVdOQ
+
+
+
+Outputs
+https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/outputs-section-structure.html
+
+
+
+Different Ways of Passing Parameters Securely in CloudFormation
+https://www.linkedin.com/pulse/different-ways-passing-parameters-securely-jon-bonso-wwmbc/
+
+
+Top 6 Tools to Turn Code into Beautiful Diagrams
+https://www.youtube.com/watch?v=jCd6XfWLZsg
+
+
+Visual Subnet Calculator
+https://www.davidc.net/sites/default/subnets/subnets.html
+
+
+
+How to Install & Configure PostgreSQL on Amazon Linux
+https://medium.com/@sanketgawali531/how-to-install-configure-postgresql-on-amazon-linux-8f39329d0f8e
+
+psql -U admin -d a4lwordpress -h sourcepostgresql.cdhvwedmmsgz.us-east-1.rds.amazonaws.com
