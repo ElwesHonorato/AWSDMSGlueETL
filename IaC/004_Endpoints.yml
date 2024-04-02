@@ -69,3 +69,11 @@ Resources:
       Tags:
         - Key: "Name"
           Value: "TargetDatabaseEndpoint"
+
+
+Outputs:
+  RawDataBucketOutput:
+    Description: The name of the raw data bucket
+    Value: !Sub "Stack-003-RDSAndReplication-RawDataRDS"
+    Export:
+      Name: "export-name-test2"

@@ -134,7 +134,8 @@ Resources:
   #     BucketName: !Ref RawBucket
 
 Outputs:
-  RDSEndpoint:
+  RawRDSEndpoint:
     Description: Endpoint of the newly created RDS instance
+    Export:
+      Name: !Sub "${AWS::StackName}-RawDataRDS"
     Value: !GetAtt DBInstance.Endpoint.Address
-

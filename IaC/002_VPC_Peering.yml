@@ -20,26 +20,6 @@ Parameters:
     Description: The CIDR block of the accepter VPC
     Default: '10.16.0.0/16'
 
-  # # Subnets
-  # SubnetPubA:
-  #   Description: ID of the existing Public Subnet A
-  #   Type: String
-  #   Default: 'subnet-05928216af587a7a6'
-  # SubnetPubB:
-  #   Description: ID of the existing Public Subnet A
-  #   Type: String
-  #   Default: 'subnet-075ac50140654a0a9'
-
-  # SubnetPrivA:
-  #   Description: ID of the existing Private Subnet A
-  #   Type: String
-  #   Default: 'subnet-026998c17d4a1d0f8'
-  # SubnetPrivB:
-  #   Description: ID of the existing Private Subnet B
-  #   Type: String
-  #   Default: 'subnet-08e7f6a58facfd8ec'
-
-
   SourceAwsPrivateRT:
     Description: awsPrivateRouteTable
     Type: String
@@ -78,7 +58,7 @@ Resources:
   AWSDBPublicRouteTable:
     Type: AWS::EC2::RouteTable
     Properties:
-      VpcId: !Ref AccepterVPCId # Replace YourVpcIdHere with the logical ID or ARN of your VPC
+      VpcId: !Ref AccepterVPCId 
       Tags:
         - Key: Name
           Value: 'A4L-ON-PREMISES-TO-AWS'
@@ -113,77 +93,3 @@ Resources:
         DestinationCidrBlock: '172.16.0.0/22'
         VpcPeeringConnectionId: !Ref VPCPeeringConnection
 
-
-
-
-
-
-
-
-
-  # AWSRouteTablePubAssociationA:
-  #   Type: "AWS::EC2::SubnetRouteTableAssociation"
-  #   Properties:
-  #     RouteTableId: !Ref AWSDBPublicRouteTable  # Replace with the logical ID or ARN of the awsPublicRT route table
-  #     SubnetId: !Ref SubnetPubA                 # Replace with the logical ID or ARN of the aws-publicA subnet
-
-  # AWSRouteTablePubAssociationA:
-  #   Type: "AWS::EC2::SubnetRouteTableAssociation"
-  #   Properties:
-  #     RouteTableId: !Ref AWSDBPublicRouteTable  # Replace with the logical ID or ARN of the awsPublicRT route table
-  #     SubnetId: !Ref SubnetPubB                 # Replace with the logical ID or ARN of the aws-publicB subnet
-
-  # # /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
-
-  # AWSDBPrivateRouteTable:
-  #   Type: AWS::EC2::RouteTable
-  #   Properties:
-  #     VpcId: !Ref AccepterVPCId # Replace YourVpcIdHere with the logical ID or ARN of your VPC
-
-  # AWSPrivRoute:
-  #   Type: "AWS::EC2::Route"
-  #   Properties:
-  #     RouteTableId: !Ref AWSDBPrivateRouteTable  # Replace with the logical ID or ARN of the awsPrivateRT route table
-  #     DestinationCidrBlock: "192.168.10.0/24"
-  #     VpcPeeringConnectionId: !Ref VPCPeeringConnection
-
-  # AWSRouteTablePrivAssociationA:
-  #   Type: "AWS::EC2::SubnetRouteTableAssociation"
-  #   Properties:
-  #     RouteTableId: !Ref AWSDBPrivateRouteTable  # Replace with the logical ID or ARN of the awsPrivateRT route table
-  #     SubnetId: !Ref SubnetPubA                 # Replace with the logical ID or ARN of the aws-privateA subnet
-
-  # AWSRouteTablePrivAssociationb:
-  #   Type: "AWS::EC2::SubnetRouteTableAssociation"
-  #   Properties:
-  #     RouteTableId: !Ref AWSDBPrivateRouteTable  # Replace with the logical ID or ARN of the awsPrivateRT route table
-  #     SubnetId: !Ref SubnetPubB                 # Replace with the logical ID or ARN of the aws-privateB subnet
-
-
-  # onpremPublicRTToAWS:
-  #   Type: "AWS::EC2::Route"
-  #   Properties:
-  #     RouteTableId: !Ref onpremPublicRT
-  #     DestinationCidrBlock: "10.16.0.0/16"
-  #     VpcPeeringConnectionId: !Ref VPCPeeringConnection
-
-  # SourcePostGrePublicRTToAWS:
-  #   Type: "AWS::EC2::Route"
-  #   Properties:
-  #     RouteTableId: !Ref onpremPublicRT
-  #     DestinationCidrBlock: "10.16.0.0/16"
-  #     VpcPeeringConnectionId: !Ref VPCPeeringConnection
-
-  # onpremPrivateRTToOnPrem:
-  #     Type: "AWS::EC2::Route"
-  #     Properties:
-  #       RouteTableId: !Ref awsPrivateRT
-  #       DestinationCidrBlock: '192.168.10.0/24'
-  #       VpcPeeringConnectionId: !Ref VPCPeeringConnection
-
-  # awsPublicRTToOnPrem:
-  #   Type: "AWS::EC2::Route"
-  #   Properties:
-  #     RouteTableId: !Ref awsPublicRT
-  #     DestinationCidrBlock: '192.168.10.0/24'
-  #     VpcPeeringConnectionId: !Ref VPCPeeringConnection

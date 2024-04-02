@@ -141,22 +141,6 @@ Resources:
       SubnetId: !Ref awsPrivateSubnetB
       RouteTableId:
         Ref: awsPrivateRouteTable
-  # awsSecurityGroupWeb:
-  #   Type: 'AWS::EC2::SecurityGroup'
-  #   Properties:
-  #     VpcId: !Ref awsVPC
-  #     GroupDescription: Control access to the Web EC2 Instance
-  #     SecurityGroupIngress: 
-  #       - Description: 'Allow HTTP IPv4 IN'
-  #         IpProtocol: tcp
-  #         FromPort: '80'
-  #         ToPort: '80'
-  #         CidrIp: '0.0.0.0/0'
-  #       - Description: 'Allow SSH IPv4 IN'
-  #         IpProtocol: tcp
-  #         FromPort: '22'
-  #         ToPort: '22'
-  #         CidrIp: '0.0.0.0/0'
   awsSecurityGroupDB:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
@@ -178,7 +162,6 @@ Resources:
       SubnetIds:
         - !Ref awsPrivateSubnetA
         - !Ref awsPrivateSubnetB
-
      
   DBParameterGroup:
     Type: AWS::RDS::DBParameterGroup
