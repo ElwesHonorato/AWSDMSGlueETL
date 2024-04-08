@@ -1,0 +1,200 @@
+Delete all Docker Images
+    docker rmi $(docker images -q)
+
+Unzip
+    tar -xzvf sakila-db.tar.gz
+
+CLI MySQL
+    elwes@elwes:~/projects/AWS_Solutions_001/DB_L_000$ 
+    
+
+
+
+
+
+Create an AWS Glue Data Catalog with AWS DMS
+https://aws.amazon.com/blogs/database/create-an-aws-glue-data-catalog-with-aws-dms/#:~:text=However%2C%20the%20need%20to%20run%20a%20crawler,your%20databases%20and%20analytics%20workloads%20to%20AWS
+
+
+https://www.youtube.com/watch?v=bLu1dblVdOQ
+
+
+
+Outputs
+https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/outputs-section-structure.html
+
+
+
+Different Ways of Passing Parameters Securely in CloudFormation
+https://www.linkedin.com/pulse/different-ways-passing-parameters-securely-jon-bonso-wwmbc/
+
+
+Top 6 Tools to Turn Code into Beautiful Diagrams
+https://www.youtube.com/watch?v=jCd6XfWLZsg
+
+
+Visual Subnet Calculator
+https://www.davidc.net/sites/default/subnets/subnets.html
+
+
+
+How to Install & Configure PostgreSQL on Amazon Linux
+https://medium.com/@sanketgawali531/how-to-install-configure-postgresql-on-amazon-linux-8f39329d0f8e
+
+psql -U admin -d a4lwordpress -h sourcepostgresql.cdhvwedmmsgz.us-east-1.rds.amazonaws.com
+
+
+Walkthrough: Refer to resource outputs in another AWS CloudFormation stack
+https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/walkthrough-crossstackref.html
+To export resources from one AWS CloudFormation stack to another, create a cross-stack reference. Cross-stack references let you use a layered or service-oriented architecture. 
+Instead of including all resources in a single stack, you create related AWS resources in separate stacks; then you can refer to required resource outputs from other stacks. 
+By restricting cross-stack references to outputs, you control the parts of a stack that are referenced by other stacks.
+
+
+Deploy CloudFormation using AWS CodePipeline
+https://www.youtube.com/watch?v=LHz04uN-wI0
+
+
+How to: Use multiple AWS accounts with the AWS-CLI
+https://dev.to/hmintoh/how-to-use-multiple-aws-accounts-with-the-aws-cli-3lge#:~:text=To%20switch%20between%20different%20AWS,variable%20to%20a%20different%20value.
+    Can't switch AWS profile CLI but can do in the Console
+    https://stackoverflow.com/questions/56978574/cant-switch-aws-profile-cli-but-can-do-in-the-console
+
+Export existing CodePipeline/CodeBuild projects to Cloudformation
+    https://stackoverflow.com/questions/47896996/export-existing-codepipeline-codebuild-projects-to-cloudformation
+    aws codepipeline get-pipeline --name DataProcessingVPC-Pipeline
+
+
+
+Choosing Between AWS Redshift Vs AWS Redshift Serverless
+    https://medium.com/@naren3883/choosing-between-aws-redshift-vs-aws-redshift-serverless-b2b5aee83215
+
+cd ~/.ssh/
+
+
+EC2toAccessDB-Source
+ssh -i "general1634.pem" ec2-user@ec2-52-201-238-227.compute-1.amazonaws.com
+mysql -h sourcedbinstance.cdhvwedmmsgz.us-east-1.rds.amazonaws.com -P 3306 -u user_admin -p
+
+EC2toAccessDB-Raw
+ssh -i "general1634.pem" ec2-user@ec2-54-146-229-230.compute-1.amazonaws.com
+mysql -h rawdbinstance.cdhvwedmmsgz.us-east-1.rds.amazonaws.com -P 3306 -u user_admin -pdok
+
+0:04 / 4:40
+
+•
+intro
+
+
+
+
+
+
+
+
+bash
+Copy code
+nslookup sourcedbinstance.cdhvwedmmsgz.us-east-1.rds.amazonaws.com
+This command will query the DNS server configured on your system to resolve the hostname sourcedbinstance.cdhvwedmmsgz.us-east-1.rds.amazonaws.com. If successful, it will display the corresponding IP address.
+
+dig sourcedbinstance.cdhvwedmmsgz.us-east-1.rds.amazonaws.com
+
+
+Setting up Amazon VPC for JDBC connections to Amazon RDS data stores from AWS Glue
+    https://docs.aws.amazon.com/glue/latest/dg/setup-vpc-for-glue-access.html
+
+
+How to Install MySQL on Amazon Linux 2
+    yum install -y mariadb105-serve 
+
+
+
+
+Add RDS Data Source In AWS Glue
+    https://www.youtube.com/watch?v=UUoQAe_NzaA
+
+Resolvendo com Soluções AWS: Workload Discovery on AWS
+    https://www.youtube.com/watch?v=WIozLc8w8bM
+
+
+Redshift connections
+    https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-connect-redshift-home.html
+    Your Amazon Redshift cluster needs to be able to read and write to Amazon S3 in order to integrate with AWS Glue jobs.
+    To allow this, you can associate IAM roles with the Amazon Redshift cluster you want to connect to. 
+    Your role should have a policy allowing read from and write to your Amazon S3 temporary directory. 
+    Your role should have a trust relationship allowing the redshift.amazonaws.com service to AssumeRole.
+
+
+
+aws glue get-connections
+aws glue get-connection --name MyGlueConnection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Glue Locally
+
+    Develop AWS Glue Jobs Locally Using PyCharm and Docker on Windows - step by step
+        https://www.youtube.com/watch?v=-4ZnJkM-QDk
+    
+    Configuração do contêiner para utilizar o Visual Studio Code
+        https://docs.aws.amazon.com/pt_br/glue/latest/dg/aws-glue-programming-etl-libraries.html
+
+    docker pull amazon/aws-glue-libs:glue_libs_4.0.0_image_01
+    docker images
+    Dev-Containers
+    Ctrl + Shift + P
+    >Open Workspace Settings (JSON)
+    {
+        "python.defaultInterpreterPath": "/usr/bin/python3",
+        "python.analysis.extraPaths": [
+            "/home/glue_user/aws-glue-libs/PyGlue.zip:/home/glue_user/spark/python/lib/py4j-0.10.9-src.zip:/home/glue_user/spark/python/",
+        ]
+    }
+
+    export AWS_PROFILE="default"
+    export WORKSPACE_LOCATION="/home/elwes/projects/GlueLocalDev"
+    docker run -it -v ~/.aws:/home/glue_user/.aws -v $WORKSPACE_LOCATION:/home/glue_user/workspace/ -e AWS_PROFILE=$PROFILE_NAME -e DISABLE_SSL=true --rm -p 4040:4040 -p 18080:18080 --name glue_pyspark amazon/aws-glue-libs:glue_libs_4.0.0_image_01 pyspark
+
+    https://carleton.ca/scs/2023/vscode-remote-access-and-code-editing/

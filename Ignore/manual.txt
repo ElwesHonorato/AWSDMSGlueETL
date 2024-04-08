@@ -1,0 +1,21 @@
+        {
+            "Name": "Mysql connection-GlueJob",
+            "Description": "",
+            "ConnectionType": "JDBC",
+            "ConnectionProperties": {
+                "JDBC_CONNECTION_URL":,
+                "PASSWORD": "password", "jdbc:mysql://sourcedbinstance.cdhvwedmmsgz.us-east-1.rds.amazonaws.com:3306/SourceDB"
+                "USERNAME": "user_admin",
+                "KAFKA_SSL_ENABLED": "false"
+            },
+            "PhysicalConnectionRequirements": {
+                "SubnetId": "subnet-0b33b82ec8aaaf76d",
+                "SecurityGroupIdList": [
+                    "sg-0fcaa4cd3f1145b22"
+                ],
+                "AvailabilityZone": "us-east-1b"
+            },
+            "CreationTime": "2024-04-07T15:19:54.069000-03:00",
+            "LastUpdatedTime": "2024-04-07T15:19:54.069000-03:00",
+            "LastUpdatedBy": "user/iamadmin"
+        },

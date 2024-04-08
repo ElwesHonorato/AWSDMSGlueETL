@@ -1,0 +1,90 @@
+{
+    "Jobs": [
+        {
+            "Name": "VisualTest",
+            "Description": "",
+            "Role": "arn:aws:iam::815363371634:role/GlueRole",
+            "CreatedOn": "2024-04-07T17:00:13.231000-03:00",
+            "LastModifiedOn": "2024-04-07T18:38:10.763000-03:00",
+            "ExecutionProperty": {
+                "MaxConcurrentRuns": 1
+            },
+            "Command": {
+                "Name": "glueetl",
+                "ScriptLocation": "s3://aws-glue-assets-815363371634-us-east-1/scripts/Visual.py",
+                "PythonVersion": "3"
+            },
+            "DefaultArguments": {
+                "--enable-metrics": "true",
+                "--enable-spark-ui": "true",
+                "--spark-event-logs-path": "s3://aws-glue-assets-815363371634-us-east-1/sparkHistoryLogs/",
+                "--enable-job-insights": "false",
+                "--enable-observability-metrics": "true",
+                "--enable-glue-datacatalog": "true",
+                "--enable-continuous-cloudwatch-log": "true",
+                "--job-bookmark-option": "job-bookmark-disable",
+                "--job-language": "python",
+                "--TempDir": "s3://aws-glue-assets-815363371634-us-east-1/temporary/"
+            },
+            "Connections": {
+                "Connections": [
+                    "Mysql connection-GlueJob",
+                    "Redshift connection"
+                ]
+            },
+            "MaxRetries": 0,
+            "AllocatedCapacity": 10,
+            "Timeout": 2880,
+            "MaxCapacity": 10.0,
+            "WorkerType": "G.1X",
+            "NumberOfWorkers": 10,
+            "GlueVersion": "4.0",
+            "ExecutionClass": "STANDARD"
+        }
+    ]
+}
+{
+    "Jobs": [
+        {
+            "Name": "VisualTest",
+            "Description": "",
+            "Role": "arn:aws:iam::815363371634:role/GlueRole",
+            "CreatedOn": "2024-04-07T17:00:13.231000-03:00",
+            "LastModifiedOn": "2024-04-07T18:38:10.763000-03:00",
+            "ExecutionProperty": {
+                "MaxConcurrentRuns": 1
+            },
+            "Command": {
+                "Name": "glueetl",
+                "ScriptLocation": "s3://aws-glue-assets-815363371634-us-east-1/scripts/Visual.py",
+                "PythonVersion": "3"
+            },
+            "DefaultArguments": {
+                "--enable-metrics": "true",
+                "--enable-spark-ui": "true",
+                "--spark-event-logs-path": "s3://aws-glue-assets-815363371634-us-east-1/sparkHistoryLogs/",
+                "--enable-job-insights": "false",
+                "--enable-observability-metrics": "true",
+                "--enable-glue-datacatalog": "true",
+                "--enable-continuous-cloudwatch-log": "true",
+                "--job-bookmark-option": "job-bookmark-disable",
+                "--job-language": "python",
+                "--TempDir": "s3://aws-glue-assets-815363371634-us-east-1/temporary/"
+            },
+            "Connections": {
+                "Connections": [
+                    "Mysql connection-GlueJob",
+                    "Redshift connection"
+                ]
+            },
+            "MaxRetries": 0,
+            "AllocatedCapacity": 10,
+            "Timeout": 2880,
+            "MaxCapacity": 10.0,
+            "WorkerType": "G.1X",
+            "NumberOfWorkers": 10,
+            "GlueVersion": "4.0",
+            "ExecutionClass": "STANDARD"
+        }
+    ]
+}

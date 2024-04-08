@@ -1,0 +1,20 @@
+        {
+            "Name": "Source-MySql",
+            "Description": "Connection to MySQL source database",
+            "ConnectionType": "JDBC",
+            "ConnectionProperties": {
+                "JDBC_CONNECTION_URL": "arn:aws:dms:us-east-1:815363371634:endpoint:TODGBXDWLENYABSJZJ4MNZPR4JIHPD2T5J2YYNQ",
+                "PASSWORD": "password",
+                "USERNAME": "user_admin",
+                "KAFKA_SSL_ENABLED": "false"
+            },
+            "PhysicalConnectionRequirements": {
+                "SubnetId": "subnet-0b33b82ec8aaaf76d",
+                "SecurityGroupIdList": [
+                    "sg-0fcaa4cd3f1145b22"
+                ],
+                "AvailabilityZone": "us-east-1b"
+            },
+            "CreationTime": "2024-04-07T20:55:08.519000-03:00",
+            "LastUpdatedTime": "2024-04-07T21:05:10.761000-03:00"
+        },

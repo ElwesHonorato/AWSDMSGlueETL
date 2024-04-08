@@ -1,0 +1,62 @@
+{
+    "Jobs": [
+                {
+            "Name": "GlueJobUserSummary",
+            "Description": "",
+            "Role": "arn:aws:iam::815363371634:role/GlueRole",
+            "CreatedOn": "2024-04-08T01:11:28.256000-03:00",
+            "LastModifiedOn": "2024-04-08T01:11:28.256000-03:00",
+            "ExecutionProperty": {
+                "MaxConcurrentRuns": 1
+            },
+            "Command": {
+                "Name": "glueetl",
+                "ScriptLocation": "https://git-codecommit.us-east-1.amazonaws.com/v1/repos/Job-SourceRDS-ETL/ScriptsGlueJob-UserWalletBalanceSummary.py",
+                "PythonVersion": "3"
+            },
+            "Connections": {
+                "Connections": [
+                    "Source-MySql"
+                ]
+            },
+            "MaxRetries": 0,
+            "AllocatedCapacity": 10,
+            "Timeout": 2880,
+            "MaxCapacity": 10.0,
+            "WorkerType": "G.1X",
+            "NumberOfWorkers": 10,
+            "GlueVersion": "4.0"
+        }
+    ]
+}
+{
+    "Jobs": [
+        {
+            "Name": "GlueJobUserSummary",
+            "Description": "",
+            "Role": "arn:aws:iam::815363371634:role/GlueRole",
+            "CreatedOn": "2024-04-08T01:11:28.256000-03:00",
+            "LastModifiedOn": "2024-04-08T01:11:28.256000-03:00",
+            "ExecutionProperty": {
+                "MaxConcurrentRuns": 1
+            },
+            "Command": {
+                "Name": "glueetl",
+                "ScriptLocation": "https://git-codecommit.us-east-1.amazonaws.com/v1/repos/Job-SourceRDS-ETL/ScriptsGlueJob-UserWalletBalanceSummary.py",
+                "PythonVersion": "3"
+            },
+            "Connections": {
+                "Connections": [
+                    "Source-MySql"
+                ]
+            },
+            "MaxRetries": 0,
+            "AllocatedCapacity": 10,
+            "Timeout": 2880,
+            "MaxCapacity": 10.0,
+            "WorkerType": "G.1X",
+            "NumberOfWorkers": 10,
+            "GlueVersion": "4.0"
+        }
+    ]
+}
