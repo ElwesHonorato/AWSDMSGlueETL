@@ -1,0 +1,74 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template for creating AWS Systems Manager Parameter Store
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - prod
+      - staging
+      - dev
+      # Fn::Sub, which is much cleaner and easy to read.
+      # !Sub "/database/${Environment}/url"
+
+Resources:
+  P000000020:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /source/db/cryptocurrency/DBInstanceSubnetGroup
+      Description: DBSubnetGroupName
+      Type: String	
+      Value: 'SourceDBInstanceSubnetGroup'
+
+  P000000030:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /source/db/cryptocurrency/DataBaseInstanceIdentifier
+      Description: DBInstanceIdentifier	
+      Type: String
+      Value: 'SourceDBInstance'
+
+  P000000040:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /source/db/cryptocurrency/DataBaseName
+      Description: DataBaseName	
+      Type: String
+      Value: 'SourceDB'
+
+  P000000050:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /source/db/cryptocurrency/DBEngine
+      Description: Engine	
+      Type: String
+      Value: 'MYSQL'
+
+  P000000060:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /source/db/cryptocurrency/EC2AMI
+      Description: EC2 Access DB
+      Type: String
+      Value: 'ami-051f8a213df8bc089'
+
+  P000000070:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /source/db/cryptocurrency/EC2KeyPar
+      Description: KeyPar
+      Type: String
+      Value: 'general1634'
+
+  P000000080:
+    Type: AWS::SSM::Parameter
+    AllowedValues:
+      - t2.micro
+      - t2.small
+      - t3.micro
+    Properties:
+      Name: /source/db/cryptocurrency/EC2InstanceType 
+      Description: Instance type for the EC2 instance
+      Type: String
+      Value: t2.micro
